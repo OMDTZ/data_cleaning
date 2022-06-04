@@ -1,6 +1,17 @@
 import sys, os
 import csv
 
+def cleandict(infile, outfile):
+    dictreader = csv.DictReader(open(infile))
+    for row in dictreader:
+        energy = ''
+        try:
+            energy = row['energy_source'].replace("grid_LUKU", 'electricity')
+
+        except:
+            print('not found')
+        print(energy)
+
 def clean(infile, outfile):
     reader = csv.reader(open(infile))
     data = list(reader)
@@ -32,7 +43,7 @@ if __name__ == "__main__":
         (filepath, ext) = os.path.splitext(filename)
         outfile = os.path.join(outdir,filename)
         try:
-            clean(infile, outfile)
+            cleandict(infile, outfile)
         except:
             print('this file is fucked up')
             print(filename)
@@ -41,6 +52,7 @@ if __name__ == "__main__":
     #clean(sys.argv[1])
     #newfilename = filepath + '_CLEANED' + ext
     #dirname = os.path.dirname(filename)
+    # print(row['interviewee_mill_owner'])
 
 
     
