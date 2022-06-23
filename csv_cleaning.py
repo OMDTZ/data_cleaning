@@ -5,12 +5,17 @@ def cleandict(infile, outfile):
     dictreader = csv.DictReader(open(infile))
     for row in dictreader:
         energy = ''
+        mill_type = ''
         try:
-            energy = row['energy_source'].replace("grid_LUKU", 'electricity')
+            energy = row['energy_source'].replace(
+                'grid_LUKU', 'electricity')
+            mill_type = row['mill_type'].replace(
+                'rolling', 'roller')
 
         except:
             print('not found')
         print(energy)
+        print(mill_type)
 
 def clean(infile, outfile):
     reader = csv.reader(open(infile))
