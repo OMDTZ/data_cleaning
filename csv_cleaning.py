@@ -3,21 +3,23 @@ import csv
 
 def cleandict(infile, outfile):
     dictreader = csv.DictReader(open(infile))
+    of = open(outfile, 'w')
+    writer = csv.DictWriter(of, fieldnames = dictreader.fieldnames)
+    writer.writeheader()
     for row in dictreader:
-        energy = ''
-        mill_type = ''
+        newrow = row
         try:
-            energy = row['energy_source'].replace(
+            newrow['energy_source'] = row['energy_source'].replace(
                 'grid_LUKU', 'electricity')
-            mill_type = row['mill_type'].replace(
+            newrow['mill_type'] = row['mill_type'].replace(
                 'rolling', 'roller').replace(
                 'rice_grinding_machine', 'rice_milling_machine').replace(
                 'maize_germ_extractor', 'dehuller')
 
         except:
             print('not found')
-        print(energy)
-        print(mill_type)
+        writer.writerow(newrow)
+
 
 def clean(infile, outfile):
     reader = csv.reader(open(infile))
@@ -49,11 +51,13 @@ if __name__ == "__main__":
         infile = os.path.join(indir, filename)
         (filepath, ext) = os.path.splitext(filename)
         outfile = os.path.join(outdir,filename)
-        try:
-            cleandict(infile, outfile)
-        except:
-            print('this file is fucked up')
-            print(filename)
+        if ext == '.csv':
+            try:
+                cleandict(infile, outfile)
+            except Exception as e:
+                print('this file is fucked up')
+                print(filename)
+                print(e)
 
     #print(filelist)
     #clean(sys.argv[1])
