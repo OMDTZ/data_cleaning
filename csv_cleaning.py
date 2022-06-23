@@ -10,7 +10,9 @@ def cleandict(infile, outfile):
             energy = row['energy_source'].replace(
                 'grid_LUKU', 'electricity')
             mill_type = row['mill_type'].replace(
-                'rolling', 'roller')
+                'rolling', 'roller').replace(
+                'rice_grinding_machine', 'rice_milling_machine').replace(
+                'maize_germ_extractor', 'dehuller')
 
         except:
             print('not found')
