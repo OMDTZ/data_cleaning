@@ -15,6 +15,12 @@ def cleandict(infile, outfile):
                 'rolling', 'roller').replace(
                 'rice_grinding_machine', 'rice_milling_machine').replace(
                 'maize_germ_extractor', 'dehuller')
+            if(newrow['mill_type'] == 'hammer' or
+                    newrow['mill_type'] == 'rice_milling_machine'):
+                newrow['Packaging_flour_fortified'] = 'no'
+            if not ('wheat' in newrow['commodity_milled'].lower() or
+                    'maize' in newrow['commodity_milled'].lower()):
+                newrow['Packaging_flour_fortified'] = 'no'
 
         except:
             print('not found')
